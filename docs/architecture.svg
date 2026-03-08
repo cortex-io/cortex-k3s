@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 620" width="800" height="620">
+  <defs>
+    <style>
+      @keyframes flowDown {
+        0% { stroke-dashoffset: 24; }
+        100% { stroke-dashoffset: 0; }
+      }
+      @keyframes flowRight {
+        0% { stroke-dashoffset: 24; }
+        100% { stroke-dashoffset: 0; }
+      }
+      @keyframes pulseNode {
+        0%, 100% { stroke-opacity: 0.7; }
+        50% { stroke-opacity: 1; }
+      }
+      @keyframes glowPulse {
+        0%, 100% { filter: drop-shadow(0 0 2px #3fb950); }
+        50% { filter: drop-shadow(0 0 8px #3fb950); }
+      }
+      .flow-down {
+        stroke-dasharray: 8 4;
+        animation: flowDown 0.8s linear infinite;
+      }
+      .flow-right {
+        stroke-dasharray: 8 4;
+        animation: flowRight 0.8s linear infinite;
+      }
+      .node-box {
+        rx: 8;
+        ry: 8;
+      }
+      .label {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+        fill: #c9d1d9;
+        font-size: 13px;
+        text-anchor: middle;
+      }
+      .label-title {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+        fill: #ffffff;
+        font-size: 14px;
+        font-weight: 600;
+        text-anchor: middle;
+      }
+      .label-small {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+        fill: #8b949e;
+        font-size: 11px;
+        text-anchor: middle;
+      }
+      .orchestrator {
+        animation: pulseNode 2s ease-in-out infinite;
+      }
+      .orch-glow {
+        animation: glowPulse 2s ease-in-out infinite;
+      }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="620" fill="#0d1117"/>
+
+  <!-- User/Browser -->
+  <rect x="330" y="20" width="140" height="50" class="node-box" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="400" y="42" class="label-title">User / Browser</text>
+  <text x="400" y="58" class="label-small">requests</text>
+
+  <!-- Arrow: User -> Nginx -->
+  <line x1="400" y1="70" x2="400" y2="100" class="flow-down" stroke="#58a6ff" stroke-width="2"/>
+  <polygon points="395,100 400,110 405,100" fill="#58a6ff"/>
+
+  <!-- Nginx -->
+  <rect x="330" y="110" width="140" height="50" class="node-box" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="400" y="132" class="label-title">Nginx</text>
+  <text x="400" y="148" class="label-small">reverse proxy</text>
+
+  <!-- Arrow: Nginx -> Backend -->
+  <line x1="400" y1="160" x2="400" y2="190" class="flow-down" stroke="#58a6ff" stroke-width="2"/>
+  <polygon points="395,190 400,200 405,190" fill="#58a6ff"/>
+
+  <!-- Backend -->
+  <rect x="330" y="200" width="140" height="50" class="node-box" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="400" y="222" class="label-title">Backend</text>
+  <text x="400" y="238" class="label-small">API service</text>
+
+  <!-- Arrow: Backend -> Orchestrator -->
+  <line x1="400" y1="250" x2="400" y2="290" class="flow-down" stroke="#3fb950" stroke-width="2"/>
+  <polygon points="395,290 400,300 405,290" fill="#3fb950"/>
+
+  <!-- Orchestrator (larger, pulsing) -->
+  <g class="orch-glow">
+    <rect x="300" y="300" width="200" height="70" class="node-box orchestrator" fill="#161b22" stroke="#3fb950" stroke-width="2.5"/>
+  </g>
+  <text x="400" y="328" class="label-title" fill="#3fb950">Orchestrator</text>
+  <text x="400" y="348" class="label-small">task routing + MoE</text>
+  <text x="400" y="362" class="label-small" fill="#3fb950">&#x25C9; active</text>
+
+  <!-- Branches from Orchestrator -->
+
+  <!-- Left branch: Claude API -->
+  <line x1="300" y1="335" x2="170" y2="335" class="flow-right" stroke="#f0883e" stroke-width="1.5" style="animation-direction: reverse"/>
+  <polygon points="170,330 160,335 170,340" fill="#f0883e"/>
+  <rect x="40" y="310" width="120" height="50" class="node-box" fill="#161b22" stroke="#f0883e" stroke-width="1.5"/>
+  <text x="100" y="332" class="label-title">Claude API</text>
+  <text x="100" y="348" class="label-small">LLM inference</text>
+
+  <!-- Right branch: Redis -->
+  <line x1="500" y1="335" x2="610" y2="335" class="flow-right" stroke="#f0883e" stroke-width="1.5"/>
+  <polygon points="610,330 620,335 610,340" fill="#f0883e"/>
+  <rect x="620" y="310" width="140" height="50" class="node-box" fill="#161b22" stroke="#f0883e" stroke-width="1.5"/>
+  <text x="690" y="332" class="label-title">Redis</text>
+  <text x="690" y="348" class="label-small">queue + state</text>
+
+  <!-- Down-left: MCP Servers -->
+  <line x1="350" y1="370" x2="200" y2="420" class="flow-down" stroke="#58a6ff" stroke-width="1.5"/>
+  <polygon points="195,416 195,426 205,421" fill="#58a6ff"/>
+
+  <rect x="100" y="420" width="200" height="50" class="node-box" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="200" y="442" class="label-title">MCP Servers</text>
+  <text x="200" y="458" class="label-small">tool execution</text>
+
+  <!-- Down-right: Queue Workers -->
+  <line x1="450" y1="370" x2="600" y2="420" class="flow-down" stroke="#58a6ff" stroke-width="1.5"/>
+  <polygon points="595,416 605,421 595,426" fill="#58a6ff"/>
+
+  <rect x="530" y="420" width="160" height="50" class="node-box" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="610" y="442" class="label-title">Queue Workers</text>
+  <text x="610" y="458" class="label-small">2 replicas</text>
+
+  <!-- MCP Server targets -->
+  <rect x="20" y="500" width="90" height="40" class="node-box" fill="#0d1117" stroke="#8b949e" stroke-width="1"/>
+  <text x="65" y="524" class="label-small" fill="#c9d1d9">UniFi</text>
+
+  <rect x="120" y="500" width="90" height="40" class="node-box" fill="#0d1117" stroke="#8b949e" stroke-width="1"/>
+  <text x="165" y="524" class="label-small" fill="#c9d1d9">Proxmox</text>
+
+  <rect x="220" y="500" width="90" height="40" class="node-box" fill="#0d1117" stroke="#8b949e" stroke-width="1"/>
+  <text x="265" y="524" class="label-small" fill="#c9d1d9">Sandfly</text>
+
+  <rect x="320" y="500" width="90" height="40" class="node-box" fill="#0d1117" stroke="#8b949e" stroke-width="1"/>
+  <text x="365" y="524" class="label-small" fill="#c9d1d9">K8s</text>
+
+  <!-- Lines from MCP to targets -->
+  <line x1="140" y1="470" x2="65" y2="500" class="flow-down" stroke="#8b949e" stroke-width="1"/>
+  <line x1="175" y1="470" x2="165" y2="500" class="flow-down" stroke="#8b949e" stroke-width="1"/>
+  <line x1="225" y1="470" x2="265" y2="500" class="flow-down" stroke="#8b949e" stroke-width="1"/>
+  <line x1="260" y1="470" x2="365" y2="500" class="flow-down" stroke="#8b949e" stroke-width="1"/>
+
+  <!-- Wazuh (security, separate) -->
+  <rect x="530" y="500" width="160" height="50" class="node-box" fill="#161b22" stroke="#f0883e" stroke-width="1.5"/>
+  <text x="610" y="522" class="label-title" fill="#f0883e">Wazuh</text>
+  <text x="610" y="538" class="label-small">security monitoring</text>
+
+  <line x1="610" y1="470" x2="610" y2="500" class="flow-down" stroke="#f0883e" stroke-width="1"/>
+
+  <!-- Legend -->
+  <text x="400" y="585" class="label-small">7 ConfigMaps  |  148KB docs  |  17 tools  |  2 queue workers</text>
+  <text x="400" y="603" class="label-small" fill="#3fb950">Orchestrator routes tasks via Mixture of Experts to specialized MCP servers.</text>
+</svg>
