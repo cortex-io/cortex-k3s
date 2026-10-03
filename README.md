@@ -1,51 +1,42 @@
-<div align="center">
+<img src="docs/banner.svg" width="100%" alt="cortex-k3s: cluster documentation: Wazuh security, KEDA autoscaling and monitoring. Part of the archived Cortex project.">
 
-# Cortex K3s
+> [!NOTE]
+> **Archived.** This repo is part of [Cortex](https://github.com/cortex-io), which is no longer under active development. It is kept as a working record: explore, fork and borrow freely, but no fixes or features are planned.
 
-**Kubernetes cluster documentation — deployment architecture, security, and monitoring.**
+<p align="center"><sub><a href="https://github.com/cortex-io"><b>Cortex</b></a> &nbsp;·&nbsp; <a href="https://github.com/cortex-io/cortex">cortex</a> · <a href="https://github.com/cortex-io/cortex-platform">cortex-platform</a> · <a href="https://github.com/cortex-io/cortex-gitops">cortex-gitops</a> · <b>cortex-k3s</b> · <a href="https://github.com/cortex-io/cortex-docs">cortex-docs</a> · <a href="https://github.com/cortex-io/cortex-construction-hq">cortex-construction-hq</a> · <a href="https://github.com/cortex-io/infrastructure-docs">infrastructure-docs</a></sub></p>
 
-> :warning: **This project is archived.** No longer under active development.
+## What's here
 
-</div>
+Documentation for the Cortex K3s cluster (Wazuh security, KEDA autoscaling, the monitoring stack), plus the deployment manifests, coordination state and scripts behind it. The core docs were extracted from the live cluster's ConfigMaps.
 
----
+<img src="docs/architecture.svg" width="100%" alt="Request flow through Nginx and the backend to the orchestrator, MCP servers, queue workers, Redis, Claude API and Wazuh">
 
-## Overview
+## Key components
 
-Documentation for the Cortex K3s cluster, including Wazuh security platform deployment, KEDA autoscaling configuration, and monitoring stack setup. All docs extracted from live ConfigMaps.
+- **Orchestrator:** routes tasks to specialized MCP servers using Mixture-of-Experts routing
+- **Queue workers:** 2 replicas for parallel processing
+- **Redis:** message queue and session state
+- **MCP servers:** tool execution for UniFi, Proxmox, Sandfly and Kubernetes
+- **Wazuh:** security monitoring and threat detection
 
-## Architecture
+## The ConfigMap docs
 
-<div align="center"><img src="docs/architecture.svg" alt="K3s Architecture" width="800"></div>
+| Document | Size | What it covers |
+|---|--:|---|
+| [8-hour exploration summary](configmaps/8-hour-exploration-summary-backup.yaml) | 25 KB | Executive summary of the infrastructure discovery |
+| [Integration guide](configmaps/cortex-integration-guide-backup.yaml) | 32 KB | Master reference connecting all components |
+| [Workflows](configmaps/cortex-workflows-backup.yaml) | 18 KB | Real workflow documentation |
+| [Tools catalog](configmaps/cortex-tools-catalog-backup.yaml) | 14 KB | All 17 tools |
+| [LLM-D architecture](configmaps/llm-d-architecture-backup.yaml) | 9.6 KB | The LLM daemon / orchestrator design |
+| [Task processing](configmaps/cortex-task-processing-backup.yaml) | 22 KB | Queue and worker processing |
+| [MoE routing](configmaps/cortex-moe-routing-backup.yaml) | 28 KB | The Mixture-of-Experts routing system |
 
-## Documentation Index
+More in [ARCHITECTURE.md](ARCHITECTURE.md), [CORE-PRINCIPLES.md](CORE-PRINCIPLES.md) and [README-K3S.md](README-K3S.md).
 
-| Document | Size | Description |
-|----------|------|-------------|
-| 8-Hour Exploration Summary | 25KB | Executive summary of infrastructure discovery |
-| Integration Guide | 32KB | Master reference connecting all components |
-| Workflows | 18KB | Real workflow documentation |
-| Tools Catalog | 14KB | Complete catalog of 17 tools |
-| LLM-D Architecture | 9.6KB | LLM Daemon / Orchestrator design |
-| Task Processing | 22KB | Queue and worker processing |
-| MoE Routing | 28KB | Mixture of Experts routing system |
+## By the numbers
 
-## Key Components
-
-- **Orchestrator** — routes tasks to specialized MCP servers
-- **Queue Workers** — 2 replicas for parallel processing
-- **Redis** — message queue and session state
-- **MCP Servers** — tool execution (UniFi, Proxmox, Sandfly, K8s)
-- **Wazuh** — security monitoring and threat detection
-
-## Stats
-
-- 7 ConfigMaps, 148KB total documentation
-- 17 tools across multiple MCP servers
-- End-to-end workflow verification
+7 ConfigMaps · 148 KB of documentation · 17 tools across the MCP servers · end-to-end workflow verification
 
 ---
 
-<div align="center">
-<sub>Built with Claude. No longer maintained.</sub>
-</div>
+<p align="center"><sub>Part of the <a href="https://github.com/cortex-io">Cortex archive</a> · built with Claude</sub></p>
