@@ -44,5 +44,11 @@
     "jest": "^29.7.0",
     "pdf-lib": "^1.17.1",
     "supertest": "^7.1.4"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/k3s-deployments/"
+    ]
   }
 }
